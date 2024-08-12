@@ -12,4 +12,4 @@ def get_video_link():
 
 @app.get("/api/audiolink")
 def get_video_link():
-    return {"audio_link": "https://www.youtube.com/watch?v=LFOx-vmYrts"}
+    return {"audio_link": "https://www.youtube.com/watch?v=g3yFIHcXn4A"}

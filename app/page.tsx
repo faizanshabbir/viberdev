@@ -1,12 +1,19 @@
 "use client"
 import React from 'react'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, RefObject } from "react";
 import dynamic from 'next/dynamic'
 
 export default function Home() {
   const [video, setVideo] = useState("");
   const [audio, setAudio] = useState("");
-  const [player, setPlayer] = useState(null);
+  const videoPlayerRef = useRef<RefObject<any>>(null);
+  const audioPlayerRef = useRef<RefObject<any>>(null);
+  const [audioMuted, setAudioMuted] = useState(true);
+  const [videoMuted, setVideoMuted] = useState(true);
+  const [audioVolume, setAudioVolume] = useState(70);
+  const [videoVolume, setVideoVolume] = useState(70);
+  const [audioPlaying, setAudioPlaying] = useState(true);
+  const [videoPlaying, setVideoPlaying] = useState(true);
   const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
   const getVideo = async () => {
@@ -25,11 +32,17 @@ export default function Home() {
     setAudio(data.audio_link);
   };
 
-
   useEffect(() => { 
     getVideo() 
     getAudio()
   }, []);
+
+  const toggleMute = (playerRef: RefObject<any>, mute: boolean) => {
+    console.log("toggling mute");
+    if (playerRef.current) {
+      playerRef.current.mute(mute);
+    }
+  };
 
   return (
     <main className="flex flex-col w-screen h-screen bg-black">
@@ -40,11 +53,17 @@ export default function Home() {
       <div className="relative w-screen h-screen">
         <div className='absolute text-white'>
           {/* <h1 className="text-xl text-right">Viber</h1> */}
-          <div><a href={video}>Video.</a></div>
-          <div><a href={audio}>Audio.</a></div>
+          <div className='flex flex-row space-x-4'>
+            <a href={video}>Video.</a>
+          </div>
+          <div className='flex flex-row space-x-4'>
+            <a href={audio}>Audio.</a>
+            <button onClick={() => setAudioMuted(false)} className="text-white">Unmute Audio</button>
+          </div>
         </div>
         <div className="flex w-screen h-screen cursor-non pointer-events-none">
           <ReactPlayer
+            ref={videoPlayerRef}
             url={video}
             width='100%'
             height='100%'
@@ -53,6 +72,18 @@ export default function Home() {
             volume={0}
             muted={true}
           />
+        </div>
+        <div className="hidden">
+          <ReactPlayer
+              ref={audioPlayerRef}
+              url={audio}
+              width='0%'
+              height='0%'
+              controls={false}
+              playing={true}
+              volume={70}
+              muted={audioMuted}
+            />
         </div>
       </div>
     </main>
