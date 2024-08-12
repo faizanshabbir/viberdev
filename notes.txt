@@ -3,6 +3,8 @@ Pause, Play, Skip / Next buttons next to video / audio text?
 Volume controls on both video / audio
 Video display on screen, take up full screen
 Audio plays in background
+Change title
+Change Favicon
 
 Journey
 Use arrives, it starts playing video and audio
