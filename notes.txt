@@ -1,0 +1,12 @@
+[DONE] On the top it has video, and below it audio. 
+Pause, Play, Skip / Next buttons next to video / audio text?
+Volume controls on both video / audio
+Video display on screen, take up full screen
+Audio plays in background
+
+Journey
+Use arrives, it starts playing video and audio
+When a video or audio stops, it starts playing the next one?
+- playlist so just keeps going? But its harder to find playlists. . . 
+- If there's an action that lets me know it hit end, i can invoke function to get new?
+User can change video and audio.
