@@ -1,4 +1,6 @@
 "use client"
+import React from 'react'
+import ReactPlayer from 'react-player'
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -22,38 +24,10 @@ export default function Home() {
     setAudio(data.audio_link);
   };
 
-  const onPlayerReady = (event: YT.PlayerEvent) => {
-    console.log("Player is ready");
-  };
-
-  const playVideo = () => {
-    if (player) {
-      player.playVideo();
-    }
-  };
 
   useEffect(() => { 
     getVideo() 
     getAudio()
-
-    // Load YouTube IFrame Player API script
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName('script')[0];
-    if (firstScriptTag.parentNode) {
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    }
-    // Create YouTube player instance
-    window.onYouTubeIframeAPIReady = () => {
-      const newPlayer = new YT.Player('player', {
-        events: {
-          'onReady': onPlayerReady
-        }
-      });
-      setPlayer(newPlayer);
-    };
-
-    playVideo();
   }, []);
 
   return (
@@ -62,17 +36,6 @@ export default function Home() {
         <div><a href={video}>Video.</a></div>
         <div><a href={audio}>Audio.</a></div>
       </div> */}
-      <div className="w-screen h-screen flex-grow flex">
-        <iframe
-          width="100%"
-          height="100%"
-          src={`${video}?enablejsapi=1&controls=0`}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="w-full h-full pointer-events-none"
-        ></iframe>
-      </div>
     </main>
   );
 }
