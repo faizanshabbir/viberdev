@@ -6,6 +6,11 @@
 .pnp.js
 env
 __pycache__ 
+export.sh
+
+# secrets
+.env
+export.sh
 
 # testing
 /coverage
