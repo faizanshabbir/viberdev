@@ -2,18 +2,13 @@
 import React from 'react'
 import { useEffect, useState, useRef, RefObject } from "react";
 import dynamic from 'next/dynamic'
+import ReactPlayer from 'react-player';
 
 export default function Home() {
   const [video, setVideo] = useState("");
   const [audio, setAudio] = useState("");
-  const videoPlayerRef = useRef<RefObject<any>>(null);
-  const audioPlayerRef = useRef<RefObject<any>>(null);
-  const [audioMuted, setAudioMuted] = useState(true);
-  const [videoMuted, setVideoMuted] = useState(true);
-  const [audioVolume, setAudioVolume] = useState(70);
-  const [videoVolume, setVideoVolume] = useState(70);
-  const [audioPlaying, setAudioPlaying] = useState(true);
-  const [videoPlaying, setVideoPlaying] = useState(true);
+  const videoPlayerRef = useRef<ReactPlayer>(null);
+  const audioPlayerRef = useRef<ReactPlayer>(null);
   const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 
   const getVideo = async () => {
@@ -35,13 +30,15 @@ export default function Home() {
   useEffect(() => { 
     getVideo() 
     getAudio()
+    console.log('Component mounted');
+    console.log('videoPlayerRef:', videoPlayerRef.current);
+    console.log('audioPlayerRef:', audioPlayerRef.current);
+
   }, []);
 
-  const toggleMute = (playerRef: RefObject<any>, mute: boolean) => {
+  const toggleMute = (playerRef: RefObject<ReactPlayer>, mute: boolean) => {
     console.log("toggling mute");
-    if (playerRef.current) {
-      playerRef.current.mute(mute);
-    }
+    playerRef.current.getInternalPlayer().playing = false
   };
 
   return (
@@ -55,10 +52,11 @@ export default function Home() {
           {/* <h1 className="text-xl text-right">Viber</h1> */}
           <div className='flex flex-row space-x-4'>
             <a href={video}>Video.</a>
+            <button onClick={() => toggleMute(videoPlayerRef, false)} className="text-white">Unmute Video</button>
           </div>
           <div className='flex flex-row space-x-4'>
             <a href={audio}>Audio.</a>
-            <button onClick={() => setAudioMuted(false)} className="text-white">Unmute Audio</button>
+            {/* <button onClick={() => toggleMute(audioPlayerRef, false)} className="text-white">Unmute Audio</button> */}
           </div>
         </div>
         <div className="flex w-screen h-screen cursor-non pointer-events-none">
@@ -69,7 +67,7 @@ export default function Home() {
             height='100%'
             controls= {false}
             playing={true}
-            volume={0}
+            volume={100}
             muted={true}
           />
         </div>
@@ -82,7 +80,7 @@ export default function Home() {
               controls={false}
               playing={true}
               volume={70}
-              muted={audioMuted}
+              muted={true}
             />
         </div>
       </div>
