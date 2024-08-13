@@ -110,6 +110,7 @@ export default function Home() {
             playing={videoPlaying}
             volume={70}
             muted={videoMuted}
+            onEnded={getVideo}
           />
         </div>
         <div className="hidden">
@@ -122,6 +123,7 @@ export default function Home() {
               playing={audioPlaying}
               volume={70}
               muted={audioMuted}
+              onEnded={getAudio}
             />
         </div>
       </div>
