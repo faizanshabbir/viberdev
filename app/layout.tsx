@@ -5,7 +5,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'Vibes',
-  description: 'Vibes is a web app that plays music and video to help you focus.',
+  description: 'Just Vibe.',
 }
 
 export default function RootLayout({
