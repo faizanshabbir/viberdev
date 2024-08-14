@@ -4,8 +4,8 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Focus Vibes',
-  description: 'Focus Vibes is a web app that plays music and video to help you focus.',
+  title: 'Vibes',
+  description: 'Vibes is a web app that plays music and video to help you focus.',
 }
 
 export default function RootLayout({
