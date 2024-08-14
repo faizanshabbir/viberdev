@@ -13,10 +13,10 @@ export default function Home() {
   const videoPlayerRef = useRef<ReactPlayer>(null);
   const audioPlayerRef = useRef<ReactPlayer>(null);
   // const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
-  const [videoPlaying, setVideoPlaying] = useState(true)
+  const [videoPlaying, setVideoPlaying] = useState(false)
   const videoPlayPause = () => setVideoPlaying(!videoPlaying)
   // const pause = () => setPlaying(false)
-  const [audioPlaying, setAudioPlaying] = useState(true)
+  const [audioPlaying, setAudioPlaying] = useState(false)
   const audioPlayPause = () => setAudioPlaying(!audioPlaying)
 
   const [videoMuted, setVideoMuted] = useState(true);
@@ -24,6 +24,9 @@ export default function Home() {
 
   const [audioMuted, setAudioMuted] = useState(false);
   const audioMute = () => setAudioMuted(!audioMuted);
+
+  const [initialPlay, setInitialPlay] = useState(true);
+  const initialClick = () => setInitialPlay(false);
 
   const getVideo = async () => {
     console.log("fetching video");
@@ -85,7 +88,6 @@ export default function Home() {
       </div> */}
       <div className="relative w-screen h-screen">
         <div className='absolute text-white'>
-          {/* <h1 className="text-xl text-right">Viber</h1> */}
           <div className='flex flex-row space-x-4 items-center'>
             <a href={video}>Video.</a>
             {videoPlaying ? (
@@ -116,7 +118,7 @@ export default function Home() {
             )}
             <TbPlayerSkipForwardFilled onClick={getVideo} style={{ cursor: 'pointer' }} title="Skip to next video" />
           </div>
-          <div className='flex flex-row space-x-4  items-center'>
+          <div className='flex flex-row space-x-4 items-center'>
             <a href={audio}>Audio.</a>
             {audioPlaying ? (
               <TbPlayerPauseFilled 
@@ -147,6 +149,17 @@ export default function Home() {
             <TbPlayerSkipForwardFilled onClick={getAudio} style={{ cursor: 'pointer' }} title="Skip to next video" />
           </div>
         </div>
+        {initialPlay && <div className="absolute w-screen h-screen bg-black opacity-80 flex items-center justify-center text-white">
+          <TbPlayerPlayFilled 
+            onClick={() => {
+              audioPlayPause();
+              videoPlayPause();
+              initialClick();
+            }} 
+            style={{ cursor: 'pointer' }} 
+            title="Play Vibes" 
+          />
+        </div>}
         <div className="flex w-screen h-screen cursor-non pointer-events-none">
           <ReactPlayer
             ref={videoPlayerRef}
@@ -159,7 +172,7 @@ export default function Home() {
             muted={videoMuted}
             onEnded={getVideo}
           />
-        </div>
+        </div> 
         <div className="hidden">
           <ReactPlayer
               ref={audioPlayerRef}
