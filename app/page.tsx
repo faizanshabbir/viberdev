@@ -3,6 +3,8 @@ import React from 'react'
 import { useEffect, useState, useRef, RefObject } from "react"
 // import dynamic from 'next/dynamic'
 import ReactPlayer from 'react-player'
+import { TbPlayerPlayFilled, TbPlayerPauseFilled, TbPlayerSkipForwardFilled } from "react-icons/tb";
+import { MdVolumeOff, MdVolumeUp } from "react-icons/md";
 
 export default function Home() {
   const [video, setVideo] = useState("");
@@ -84,20 +86,65 @@ export default function Home() {
       <div className="relative w-screen h-screen">
         <div className='absolute text-white'>
           {/* <h1 className="text-xl text-right">Viber</h1> */}
-          <div className='flex flex-row space-x-4'>
+          <div className='flex flex-row space-x-4 items-center'>
             <a href={video}>Video.</a>
-            {/* <button onClick={() => toggleMute(videoPlayerRef, false)} className="text-white">Unmute Video</button> */}
-            <button onClick={videoPlayPause}>PlayPause</button>
-            <button onClick={videoMute}>Mute Video</button>
-            <button onClick={getVideo}>Skip Video</button>
-            {/* <button onClick={pause}>Pause</button> */}
+            {videoPlaying ? (
+              <TbPlayerPauseFilled 
+                onClick={videoPlayPause} 
+                style={{ cursor: 'pointer' }} 
+                title="Pause Video" 
+              />
+            ) : (
+              <TbPlayerPlayFilled 
+                onClick={videoPlayPause} 
+                style={{ cursor: 'pointer' }} 
+                title="Play Video" 
+              />
+            )}
+            {videoMuted ? (
+              <MdVolumeOff 
+                onClick={videoMute} 
+                style={{ cursor: 'pointer' }} 
+                title="Pause Video" 
+              />
+            ) : (
+              <MdVolumeUp 
+                onClick={videoMute} 
+                style={{ cursor: 'pointer' }} 
+                title="Play Video" 
+              />
+            )}
+            <TbPlayerSkipForwardFilled onClick={getVideo} style={{ cursor: 'pointer' }} title="Skip to next video" />
           </div>
-          <div className='flex flex-row space-x-4'>
+          <div className='flex flex-row space-x-4  items-center'>
             <a href={audio}>Audio.</a>
-            {/* <button onClick={() => toggleMute(audioPlayerRef, false)} className="text-white">Unmute Audio</button> */}
-            <button onClick={audioPlayPause}>PlayPause</button>
-            <button onClick={audioMute}>Mute Audio</button>
-            <button onClick={getAudio}>Skip Audio</button>
+            {audioPlaying ? (
+              <TbPlayerPauseFilled 
+                onClick={audioPlayPause} 
+                style={{ cursor: 'pointer' }} 
+                title="Pause Video" 
+              />
+            ) : (
+              <TbPlayerPlayFilled 
+                onClick={audioPlayPause} 
+                style={{ cursor: 'pointer' }} 
+                title="Play Video" 
+              />
+            )}
+            {audioMuted ? (
+              <MdVolumeOff 
+                onClick={audioMute} 
+                style={{ cursor: 'pointer' }} 
+                title="Pause Video" 
+              />
+            ) : (
+              <MdVolumeUp 
+                onClick={audioMute} 
+                style={{ cursor: 'pointer' }} 
+                title="Play Video" 
+              />
+            )}
+            <TbPlayerSkipForwardFilled onClick={getAudio} style={{ cursor: 'pointer' }} title="Skip to next video" />
           </div>
         </div>
         <div className="flex w-screen h-screen cursor-non pointer-events-none">

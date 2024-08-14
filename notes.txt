@@ -1,10 +1,10 @@
 [DONE] On the top it has video, and below it audio. 
-Pause, Play, Skip / Next buttons next to video / audio text?
+[DONE] Pause, Play, Skip / Next buttons next to video / audio text?
 Volume controls on both video / audio
-Video display on screen, take up full screen
-Audio plays in background
-Change title
-Change Favicon
+[DONE] Video display on screen, take up full screen
+[EH - KINDA] Audio plays in background
+[DONE] Change title
+[DONE] Change Favicon
 
 Journey
 Use arrives, it starts playing video and audio
