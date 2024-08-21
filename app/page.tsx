@@ -39,8 +39,8 @@ export default function Home() {
     setAudioDuration(duration * 1000);
   }
 
-  const [videoCurrentTime, setVideoCurrentTime] = useState(0);
-  const [audioCurrentTime, setAudioCurrentTime] = useState(0);
+  const [videoCurrentTimeMs, setVideoCurrentTimeMs] = useState(0);
+  const [audioCurrentTimeMs, setAudioCurrentTimeMs] = useState(0);
 
   const [videoTitle, setVideoTitle] = useState("");
   const [audioTitle, setAudioTitle] = useState("");
@@ -97,20 +97,20 @@ export default function Home() {
     }
   };
 
-  const playerSetSeek = (playerRef: RefObject<ReactPlayer>, time: number, video: boolean) => {
+  const playerSetSeek = (playerRef: RefObject<ReactPlayer>, timeMs: number, video: boolean) => {
     console.log("setting seek");
-    const timeSeconds = time / 1000;
+    const timeSeconds = timeMs / 1000;
     console.log(timeSeconds);
     console.log(playerRef.current);
     if(playerRef.current){
       playerRef.current.seekTo(timeSeconds);
     }
     if(video){
-      setVideoCurrentTime(time);
-      console.log({videoCurrentTime});
+      setVideoCurrentTimeMs(timeMs);
+      console.log({videoCurrentTimeMs});
     } else {
-      setAudioCurrentTime(time);
-      console.log({audioCurrentTime});
+      setAudioCurrentTimeMs(timeMs);
+      console.log({audioCurrentTimeMs});
     }
   };
 
@@ -154,7 +154,7 @@ export default function Home() {
             {!initialPlay && <div className="relative -translate-y-2 w-1/3" style={{ width: '30%' }}>
               <VideoSeekSlider
                 max={videoDuration}
-                currentTime={videoCurrentTime}
+                currentTime={videoCurrentTimeMs}
                 bufferTime={400000}
                 onChange={((time) => playerSetSeek(videoPlayerRef, time, true))}
                 />
@@ -194,7 +194,7 @@ export default function Home() {
             {!initialPlay && <div className="relative -translate-y-2 w-1/3" style={{ width: '30%' }}>
               <VideoSeekSlider
                 max={audioDuration}
-                currentTime={audioCurrentTime}
+                currentTime={audioCurrentTimeMs}
                 bufferTime={400000}
                 onChange={((time) => playerSetSeek(audioPlayerRef, time, false))}
                 />
@@ -225,6 +225,7 @@ export default function Home() {
             muted={videoMuted}
             onEnded={getVideo}
             onDuration={(duration) => setVideoDurationMilliseconds(duration)}
+            onProgress={(progress) => setVideoCurrentTimeMs(progress.playedSeconds * 1000)}
           />
         </div> 
         <div className="hidden">
@@ -239,6 +240,7 @@ export default function Home() {
               muted={audioMuted}
               onEnded={getAudio}
               onDuration={(duration) => setAudioDurationMilliseconds(duration)}
+              onProgress={(progress) => setAudioCurrentTimeMs(progress.playedSeconds * 1000)}
             />
         </div>
       </div>
