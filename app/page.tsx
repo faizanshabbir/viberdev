@@ -45,6 +45,12 @@ export default function Home() {
   const [videoTitle, setVideoTitle] = useState("");
   const [audioTitle, setAudioTitle] = useState("");
 
+  const [isControlCollapsed, setIsControlCollapsed] = useState(false);
+
+  const toggleCollapse = () => {
+    setIsControlCollapsed(!isControlCollapsed);
+  };
+
   const getVideo = async () => {
     console.log("fetching video");
     const response = await fetch("/api/videolink");
@@ -82,21 +88,6 @@ export default function Home() {
     console.log('audioPlayerRef:', audioPlayerRef.current);
   }, []);
 
-  const toggleMute = (playerRef: RefObject<ReactPlayer>, mute: boolean) => {
-    console.log("toggling mute");
-    // if (playerRef.current.getInternalPlayer().muted) {
-    //   playerRef.current.getInternalPlayer().muted = false;
-    // } else {
-    //   playerRef.current.getInternalPlayer().muted = true;
-    // }
-    if(playerRef.current){
-      console.log(("exists!"))
-      playerRef.current.setState({playing: false})
-      // playerRef.current.getInternalPlayer().playing = false;
-      // console.log(playerRef.current.)
-    }
-  };
-
   const playerSetSeek = (playerRef: RefObject<ReactPlayer>, timeMs: number, video: boolean) => {
     console.log("setting seek");
     const timeSeconds = timeMs / 1000;
@@ -114,14 +105,13 @@ export default function Home() {
     }
   };
 
-  // const togglePlaying = () => {
-  //   setPlaying(!playing);
-  // }
-
   return (
     <main className="flex flex-col w-screen h-screen bg-black">
       <div className="relative w-screen h-screen">
-        <div className='absolute text-white w-full bg-black pt-5 pb-4'>
+        <button onClick={toggleCollapse} className="text-white">
+          {isControlCollapsed ? 'Expand' : 'Collapse'}
+        </button>
+        {!isControlCollapsed && <div className='absolute text-white w-full bg-black pt-3 pb-3'>
           <div className='flex flex-row space-x-4 min-h-[30px] items-center '>
             <a href={video}>Video.</a>
             {videoPlaying ? (
@@ -201,7 +191,7 @@ export default function Home() {
             </div> }
             <a href={audio}>{audioTitle}</a>
           </div>
-        </div>
+        </div>}
         {initialPlay && <div className="absolute w-screen h-screen bg-black flex items-center justify-center text-white">
           <TbPlayerPlayFilled 
             onClick={() => {
