@@ -65,7 +65,7 @@ export default function Home() {
   };
 
   const getAndSetTitle = async (url: string, video: boolean) => {
-    const response = await fetch("http://noembed.com/embed?url=" + url);
+    const response = await fetch("https://noembed.com/embed?url=" + url);
     const data = await response.json();
     if(video){
       setVideoTitle(data.title);
